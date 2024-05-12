@@ -140,5 +140,5 @@ jobs:
         with:
           destination_container_repo: ${{ env.DKHUB_SLUG }}
           provider: dockerhub
-          short_description: 'Docker image for Docksify'
+          short_description: 'Docker image for Docsify'
           readme_file: 'README.md'

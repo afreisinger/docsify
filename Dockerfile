@@ -1,11 +1,12 @@
 # Use a lightweight Node.js base image based on Alpine Linux
-FROM node:lts-alpine3.19 AS builder
+FROM node:lts-alpine3.19
 
 # Install necessary tools and packages
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
     bash \
+    jq \
     figlet \
     shadow \
     util-linux \
@@ -17,12 +18,7 @@ COPY custom/profile.sh /etc/profile
 COPY bin/* /root/
 COPY package.json .
 
-RUN npm install
-
-FROM node:lts-alpine3.19
-
-COPY --from=builder /etc/profile /etc/profile
-COPY --from=builder /root/* /root/
+RUN npm install --global $(jq -r '.dependencies | to_entries | map_values( "\(.key)@\(.value)" ) | join(" ")' package.json)
 
 # Create a non-privileged group and user to run the application
 RUN addgroup -g 1010 app && \

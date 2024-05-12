@@ -1,10 +1,10 @@
-# 📦 Docsify
+# 🖌 Docsify
 
 
-A Simple [Docsify](https://github.com/docsifyjs/docsify) with [Mermaid](https://mermaid.js.org/) and running env.
+> Simple [Docsify](https://github.com/docsifyjs/docsify) with [Mermaid](https://mermaid.js.org/) plug-in and example.
 
 
-[![Build and publish container](https://github.com/aleksanderbl29/docker-pihole-unbound/actions/workflows/auto-build-container.yml/badge.svg)](https://github.com/afreisinger/docsify/actions/workflows/auto-build-container.yml)
+[![Build and publish container](https://github.com/afreisinger/docsify/actions/workflows/auto-build-container.yml/badge.svg)](https://github.com/afreisinger/docsify/actions/workflows/auto-build-container.yml)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/afreisinger/docsify/latest)](https://hub.docker.com/r/afreisinger/docsify)
 [![Docker Pulls](https://img.shields.io/docker/pulls/afreisinger/docsify)](https://hub.docker.com/r/afreisinger/docsify)
 [![GitHub Release](https://img.shields.io/github/v/release/afreisinger/docsify)](https://github.com/afreisinger/docsify/releases)
@@ -41,14 +41,14 @@ docker pull ghcr.io/afreisinger/docsify:latest
 
 ```bash
 # initilize docs folder using docsify
-docker run --rm -v docs:/docs ghcr.io/afreisinger/docsify init
+docker run --rm -v docs:/docs afreisinger/docsify init
 ```
 
 ### Run
 
 ``` bash
 # using docker container
-docker run --rm -v docs:/docs ghcr.io/afreisinger/docsify serve
+docker run --rm -v docs:/docs afreisinger/docsify serve
 ```
 
 ### Optional Params
@@ -56,9 +56,17 @@ docker run --rm -v docs:/docs ghcr.io/afreisinger/docsify serve
 Optional parameters to pass to docsify
 
 ```bash
-
 --livereload-port=PORT_HERE     livereload on PORT_HERE
+```
 
+
+### Example
+
+```bash
+git clone https://github.com/afreisinger/docsify.git
+cd docsify/
+mv docs.sample docs
+docker-compose up -d  #modify docker-compose if necessary
 ```
 
 
