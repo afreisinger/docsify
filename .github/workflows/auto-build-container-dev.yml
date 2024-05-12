@@ -1,0 +1,56 @@
+name: Build and publish in development
+
+on:
+  # cron job to trigger the build on any push to main
+  push:
+    branches:
+      - 'dev'
+      - '!main'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
+
+permissions:
+    packages: write
+    contents: write
+
+jobs:
+  build-and-push-dev:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+  
+    - name: 🔐 Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Get todays date
+      id: date
+      run: echo value=$(date +%Y-%m-%d) >> $GITHUB_OUTPUT
+
+    - name: Get branch name
+      id: branch
+      run: echo value=$(echo ${{ github.ref }} | sed 's/refs\/heads\///') >> $GITHUB_OUTPUT
+
+    - name: Get repo name
+      id: repo
+      run: echo "value=$(basename ${{ github.repository }})" >> $GITHUB_OUTPUT
+    
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ github.actor }}/${{ github.event.repository.name }}:dev-${{ github.event.number }}-${{ steps.date.outputs.value }}

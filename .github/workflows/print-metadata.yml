@@ -1,0 +1,27 @@
+name: Print Docker Image Metadata
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Display Docker Metadata
+      id: docker_metadata
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+            afreisinger/docsify
+            ghcr.io/afreisinger/docsify
+
+
+    - name: Print Tags and Labels
+      run: |
+        echo "Tags: ${{ steps.docker_metadata.outputs.tags }}"
+        echo "Labels: ${{ steps.docker_metadata.outputs.labels }}"
+

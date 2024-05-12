@@ -1,0 +1,9 @@
+{
+    "name": "docsify",
+    "version": "1.0.0",
+    "dependencies": {
+        "docsify-cli": "4.4.4",
+        "docsify-mermaid": "2.0.1",
+        "docsify-mermaid-zoom": "3.0.0"
+    }
+}

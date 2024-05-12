@@ -1,0 +1,12 @@
+services:
+  docsify:
+
+    image: afreisinger/docksify:latest
+    container_name: handbook
+    restart: always
+    network_mode: host
+    volumes:
+      - ./docs:/docs
+    ports:
+      - "3000:3000"
+      - "35729:35729"
